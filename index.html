@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free form jazz</title>
+    <link rel="stylesheet" href="normalize.css">
+</head>
+<body>
+    <style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .center{
+            color: aliceblue;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 5;
+            cursor: pointer;
+            text-align:center;
+            user-select: none;
+        }
+        .btn{
+            border-radius: 50%;
+            width: 150px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: black;
+        }
+        .body{
+            position: relative;
+        }
+        .background{
+            box-sizing: border-box;
+            background-image:url('img.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment:fixed ;
+            background-size:cover;
+            height: 100vh;
+        }
+    </style>
+    <div class="center">
+        <div class="btn" id="btn">
+            FREE FORM JAZZ
+            <audio src="freeformjazz.mp3" id="audio" loop></audio>
+        </div>
+        <div class="options">
+            <label for="sponge">Spongebob part</label>
+            <input type="checkbox" id="sponge">
+        </div>
+    </div>
+
+    <div class="background" id="background">
+    </div>
+        
+    <script>
+        let btn = document.getElementById('btn');
+        let audio = document.getElementById('audio');
+        let body = document.getElementsByTagName('body')[0];
+        let background = document.getElementById('background');
+        let change = document.getElementById('sponge');
+        if(change.checked){
+            audio.src = 'freeformjazzSponge.mp3';
+        }
+        else{
+            audio.src = 'freeformjazz.mp3';
+        }
+        
+        let blurness;
+        btn.addEventListener('mousedown', ()=>{
+            console.log('a');
+            audio.play();          
+        });
+        change.addEventListener('change',(a)=>{
+            console.log(a);
+            if(a.target.checked){
+                audio.src = 'freeformjazzSponge.mp3';
+            }
+            else{
+                audio.src = 'freeformjazz.mp3';
+            }
+        });
+
+        audio.addEventListener('timeupdate',(a)=>{
+            let audio = a.target;
+            blurness = ((audio.currentTime*10)/audio.duration);
+            background.style.filter = 'blur('+blurness+'px)';
+        });
+
+        btn.addEventListener('mouseup',()=>{
+            console.log('b');
+            audio.pause();
+        });
+        btn.addEventListener('mouseleave',()=>{
+            console.log('b');
+            audio.pause();
+        });
+    </script>
+</body>
+</html>
